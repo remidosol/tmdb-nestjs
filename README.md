@@ -48,7 +48,7 @@ Ensure Docker and Docker Compose are installed and then run:
 docker-compose up --build
 ```
 
-This command will build the Docker image if it's not already built and start all services defined in docker-compose.yml, including the NestJS application and MongoDB.
+This command will build the Docker image if it's not already built and start all services defined in `docker-compose.yml`, including the NestJS application and MongoDB.
 
 ## API Documentation
 
@@ -57,7 +57,7 @@ This command will build the Docker image if it's not already built and start all
 The Swagger documentation can be accessed at:
 
 ```bash
-http://localhost:3000/api
+http://localhost:3333/api
 ```
 
 ### GraphQL Playground
@@ -65,10 +65,11 @@ http://localhost:3000/api
 The GraphQL Playground documentation can be accessed at:
 
 ```bash
-http://localhost:3000/graphql
+http://localhost:3333/graphql
 ```
 
 ##  Environment Variables
+
 Ensure that you have a .env file located in `<rootDir>/secrets/.env`. This file should contain all the necessary environment variables required by the application.
 
 Create a .env file in the secrets directory with the following variables:
@@ -112,6 +113,34 @@ This command executes the tests inside the Docker container, ensuring that the t
 ### GraphQL Queries
 
 - **findById(id: String!): Movie**: Find a movie by ID
+
+Example GraphQL query to execute in the playground:
+
+```graphql
+query GetMovieById($id: String!) {
+  findById(id: $id) {
+    id
+    name
+    overview
+    releaseDate
+    voteAverage
+    voteCount
+    genres {
+      id
+      name
+    }
+    popularity
+  }
+}
+```
+
+Example id:
+
+```json
+{
+  "id": "12345"
+}
+```
 
 Find more detailed documentation on each endpoint in the Swagger UI or the GraphQL Playground.
 

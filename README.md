@@ -45,7 +45,7 @@ cd tmdb-nestjs
 Ensure Docker and Docker Compose are installed and then run:
 
 ```bash
-docker-compose up --build
+docker-compose up -d --build
 ```
 
 This command will build the Docker image if it's not already built and start all services defined in `docker-compose.yml`, including the NestJS application and MongoDB.

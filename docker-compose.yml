@@ -1,0 +1,54 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    volumes:
+      - database:/data/db
+    ports:
+      - 27018:27017
+    networks:
+      - tmdb-nestjs
+    restart: always
+
+  tmdb_nestjs:
+    container_name: tmdb_nestjs
+    # image: tmdb-nestjs-backend:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./secrets/.env
+    environment:
+      HOST: localhost
+      HOST_BASE_URL: "http://localhost:3333"
+      DOCKER_HOST_BASE_URL: "http://tmdb_nestjs:3333"
+      PORT: "3333"
+      NODE_ENV: development
+      DEBUG: "true"
+      APP_NAME: "TMDB NestJS Case"
+      CSRF_COOKIE_NAME: "__csrf"
+      CSRF_HEADER_NAME: "x-tmdb-nestjs-csrf"
+      DEFAULT_THROTTLE_TTL: "60000" # 60 sec
+      DEFAULT_THROTTLE_LIMIT: "250"
+      POST_PATCH_THROTTLE_TTL: "30000" # 30 sec
+      POST_PATCH_THROTTLE_LIMIT: "20"
+      TMDB_BASE_URL: "https://api.themoviedb.org/3"
+    command: yarn start:dev
+    ports:
+      - 3333:3333
+    networks:
+      - tmdb-nestjs
+    depends_on:
+      - mongodb
+    volumes:
+      - ./:/app/
+      - backend_node_modules:/app/node_modules
+    restart: unless-stopped
+
+networks:
+  tmdb-nestjs:
+    driver: bridge
+
+volumes:
+  database:
+  backend_node_modules:

@@ -88,13 +88,13 @@ TMDB_READ_ACCESS_TOKEN=""
 To run the tests within the Docker environment, use the following Docker Compose command:
 
 ```bash
-docker-compose run app yarn test
+docker-compose run tmdb_nestjs yarn test
 ```
 
 For end to end tests, use:
 
 ```bash
-docker-compose run app yarn test:e2e
+docker-compose run tmdb_nestjs yarn test:e2e
 ```
 
 This command executes the tests inside the Docker container, ensuring that the testing environment is consistent with the development setup.
